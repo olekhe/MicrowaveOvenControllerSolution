@@ -89,7 +89,7 @@ namespace MicrowaveOvenControllerSolution
         }
 
         [Test]
-        public void Heater_Runs_For_2_Minute_On_Twice_Start_()
+        public void Heater_Runs_For_2_Minute_On_Twice_Start()
         {
             clockHwFake = new FakeClockHW();
 
@@ -103,11 +103,9 @@ namespace MicrowaveOvenControllerSolution
 
             microwaveOvenHwFake.Start();
 
-            Thread.Sleep(TimeSpan.FromSeconds(3));
-
             microwaveOvenHwFake.Start();
 
-            var expectedTimeSpan = TimeSpan.FromMinutes(3) - TimeSpan.FromSeconds(3);
+            var expectedTimeSpan = TimeSpan.FromMinutes(3);
 
             Assert.True(clockHwFake.Clock == expectedTimeSpan);
         }

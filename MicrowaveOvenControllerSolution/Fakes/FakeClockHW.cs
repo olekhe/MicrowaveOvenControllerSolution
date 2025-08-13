@@ -38,6 +38,10 @@ namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
             Clock = newClock;
         }
 
+        /// <summary>
+        /// Schedules a timer
+        /// </summary>
+        /// <param name="timeSpan"></param>
         public void Schedule(TimeSpan timeSpan)
         {
             Clock = timeSpan;
@@ -45,6 +49,9 @@ namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
             timer = new Timer(OnTimedEvent!, autoEvent, 1000, 1000);
         }
 
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
         public void Stop()
         {
             timer.Dispose();
