@@ -2,8 +2,14 @@
 
 namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
 {
+    /// <summary>
+    /// Fake implementation of the clock
+    /// </summary>
     internal class FakeClockHW : IClockHW
     {
+        private Timer? timer;
+        private AutoResetEvent autoEvent = new AutoResetEvent(false);
+
         /// <summary>
         /// Clock itelf
         /// </summary>
@@ -12,10 +18,7 @@ namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
         /// <summary>
         /// Event
         /// </summary>
-        public event EventHandler TimeIsElapsed;
-
-        private Timer timer;
-        private AutoResetEvent autoEvent = new AutoResetEvent(false);
+        public event EventHandler? TimeIsElapsed;
 
         /// <summary>
         /// Fires every second
@@ -54,7 +57,7 @@ namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
         /// </summary>
         public void Stop()
         {
-            timer.Dispose();
+            timer?.Dispose();
 
             Clock = TimeSpan.Zero;
 

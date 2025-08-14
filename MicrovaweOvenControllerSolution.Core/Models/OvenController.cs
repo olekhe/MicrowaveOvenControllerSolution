@@ -3,7 +3,7 @@
 namespace MicrowaveOvenControllerSolution.Core.Models
 {
     /// <summary>
-    /// Oven controller
+    /// Oven controller: implementation by Oleksandr Herhelezhyu (olek.he@outtlook.com)
     /// </summary>
     public class OvenController
     {
@@ -80,6 +80,9 @@ namespace MicrowaveOvenControllerSolution.Core.Models
             }
         }
 
+        /// <summary>
+        /// Starts
+        /// </summary>
         private void Start()
         {
             if (IsDoorOpen)
@@ -88,28 +91,6 @@ namespace MicrowaveOvenControllerSolution.Core.Models
             }
 
             TurnHeaterOn();
-        }
-
-        private void OpenDoor()
-        {
-            if (IsDoorOpen)
-            {
-                return;
-            }
-
-            IsDoorOpen = true;
-
-            TurnHeaterOff();
-        }
-
-        private void CloseDoor()
-        {
-            if (IsDoorOpen == false)
-            {
-                return;
-            }
-
-            IsDoorOpen = false;
         }
 
         /// <summary>
