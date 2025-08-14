@@ -3,7 +3,7 @@
 namespace MicrowaveOvenControllerSolution.Core.Models
 {
     /// <summary>
-    /// Oven controller: implementation by Oleksandr Herhelezhyu (olek.he@outtlook.com)
+    /// Oven controller: implementation by Oleksandr Herhelezhyu (olek.he@outlook.com)
     /// </summary>
     public class OvenController
     {
