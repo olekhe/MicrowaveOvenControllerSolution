@@ -1,6 +1,5 @@
-﻿namespace MicrovaweOvenControllerSolution.Core.Abstracts
+﻿namespace MicrowaveOvenControllerSolution.Core.Abstracts
 {
-
     /// <summary>
     /// Abstraction of a microwave oven hardware
     /// </summary>

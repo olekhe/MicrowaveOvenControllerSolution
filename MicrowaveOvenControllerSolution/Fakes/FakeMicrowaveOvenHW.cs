@@ -1,4 +1,4 @@
-﻿using MicrovaweOvenControllerSolution.Core.Abstracts;
+﻿using MicrowaveOvenControllerSolution.Core.Abstracts;
 
 namespace MicrowaveOvenControllerSolution.UnitTests.Fakes
 {

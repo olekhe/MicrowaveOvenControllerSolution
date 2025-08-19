@@ -6,7 +6,7 @@
     public class OvenClock
     {
         /// <summary>
-        /// Fake implementation of the clock
+        /// Implementation of the clock
         /// </summary>
 
         private Timer? timer;

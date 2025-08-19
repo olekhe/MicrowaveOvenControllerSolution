@@ -1,8 +1,7 @@
-﻿using MicrovaweOvenControllerSolution.Core.Abstracts;
+﻿using MicrowaveOvenControllerSolution.Core.Abstracts;
 
 namespace MicrowaveOvenControllerSolution.Core.Models
 {
-
     /// <summary>
     /// Oven controller: implementation by Oleksandr Herhelezhyu (olek.he@outlook.com)
     /// </summary>
