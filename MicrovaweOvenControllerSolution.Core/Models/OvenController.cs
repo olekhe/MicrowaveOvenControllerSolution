@@ -2,17 +2,22 @@
 
 namespace MicrowaveOvenControllerSolution.Core.Models
 {
+
     /// <summary>
     /// Oven controller: implementation by Oleksandr Herhelezhyu (olek.he@outlook.com)
     /// </summary>
     public class OvenController
     {
-        private const short DEFAULT_TIME_ADDED_MINUTES = 1;
-
         /// <summary>
         /// Hardware interface
         /// </summary>
         private readonly IMicrowaveOvenHW ovenHW;
+        private readonly OvenClock ovenControllerClock;
+
+        /// <summary>
+        /// Controller options
+        /// </summary>
+        public OvenControllerOptions Options { get; set; }
 
         /// <summary>
         /// Default ctor of the oven controller
@@ -20,16 +25,36 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// <param name="ovenHW">Hardware injected interface</param>
         public OvenController(IMicrowaveOvenHW ovenHW)
         {
+            this.Options = OvenControllerOptions.Default;
+
+            this.ovenControllerClock = new OvenClock();
+
             this.ovenHW = ovenHW;
 
             this.ovenHW.DoorOpenChanged += (bool isOpen) => IsDoorOpen = isOpen;
             this.ovenHW.StartButtonPressed += new EventHandler((_, _) => Start());
+
+            this.ovenControllerClock.TimeIsElapsed += new EventHandler((_, _) => TurnHeaterOff());
         }
 
         /// <summary>
         /// Time remaining
         /// </summary>
-        public TimeSpan TimeRemaining { get; private set; }
+        public TimeSpan? TimeRemaining
+        {
+            get => this.ovenControllerClock.Clock;
+            set
+            {
+                if (!value.HasValue)
+                {
+                    this.ovenControllerClock.Stop();
+
+                    return;
+                }
+
+                this.ovenControllerClock.Schedule(value);
+            }
+        }
 
         /// <summary>
         /// Indicates whether the light is on or off
@@ -76,7 +101,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private void TurnHeaterOn()
         {
-            TimeRemaining = TimeRemaining.Add(TimeSpan.FromMinutes(DEFAULT_TIME_ADDED_MINUTES));
+            TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(this.Options.DefaultTimeMinutes));
 
             this.ovenHW.TurnOnHeater();
         }
@@ -86,7 +111,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private void TurnHeaterOff()
         {
-            TimeRemaining = TimeSpan.Zero;
+            TimeRemaining = null;
 
             this.ovenHW.TurnOffHeater();
         }
