@@ -95,7 +95,7 @@ namespace MicrowaveOvenControllerSolution
         }
 
         [Test]
-        public void Heater_Runs_For_55_Secs_On_Start()
+        public void Heater_Runs_For_3_Secs_On_Start()
         {
             var waitTime = 0.05D;
 
@@ -107,15 +107,17 @@ namespace MicrowaveOvenControllerSolution
                 }
             };
 
-            microwaveOvenHwFake.Start();
+            microwaveOvenHwFake.Start(); // waitTime
+            microwaveOvenHwFake.Start(); // 2x waitTime
+            microwaveOvenHwFake.Start(); // 3x waitTime
 
-            Assert.IsTrue(ovenController.IsHeaterOn);
+            Assert.IsTrue(ovenController.IsHeaterOn); // should be on
 
-            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(waitTime));
+            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(waitTime * 3)); // == 3x
 
-            Thread.Sleep(TimeSpan.FromMinutes(waitTime + waitTime));
+            Thread.Sleep(TimeSpan.FromMinutes(waitTime * 4)); // wait for 4x waitTime
 
-            Assert.False(ovenController.IsHeaterOn);
+            Assert.False(ovenController.IsHeaterOn); // should be off
         }
     }
 }
