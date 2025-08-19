@@ -12,6 +12,10 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// Hardware interface
         /// </summary>
         private readonly IMicrowaveOvenHW ovenHW;
+
+        /// <summary>
+        /// Clock implementation
+        /// </summary>
         private readonly OvenClock ovenControllerClock;
 
         /// <summary>
@@ -101,7 +105,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private void TurnHeaterOn()
         {
-            TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(this.Options.DefaultTimeMinutes));
+            TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(this.Options.AddedTimeMinutes));
 
             this.ovenHW.TurnOnHeater();
         }

@@ -8,14 +8,14 @@
         /// <summary>
         /// Default time
         /// </summary>
-        public double DefaultTimeMinutes { get; set; }
+        public double AddedTimeMinutes { get; set; }
 
         /// <summary>
-        /// DEfault unstance
+        /// Added time minutes
         /// </summary>
         public static OvenControllerOptions Default => new OvenControllerOptions
         {
-            DefaultTimeMinutes = 1D
+            AddedTimeMinutes = 1D
         };
     }
 }

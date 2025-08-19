@@ -103,7 +103,7 @@ namespace MicrowaveOvenControllerSolution
             {
                 Options = new OvenControllerOptions
                 {
-                    DefaultTimeMinutes = waitTime
+                    AddedTimeMinutes = waitTime
                 }
             };
 
