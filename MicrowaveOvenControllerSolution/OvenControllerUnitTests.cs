@@ -6,8 +6,6 @@ namespace MicrowaveOvenControllerSolution
     public class Tests
     {
         private FakeMicrowaveOvenHW microwaveOvenHwFake;
-        private FakeClockHW clockHwFake;
-        private OvenController ovenController;
 
         [SetUp]
         public void Setup()
@@ -18,9 +16,7 @@ namespace MicrowaveOvenControllerSolution
         [Test]
         public void LightsIsOn_When_DoorOpen()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.OpenDoor();
 
@@ -30,9 +26,7 @@ namespace MicrowaveOvenControllerSolution
         [Test]
         public void LightsIsOff_When_OpenDoor_CloseDoor()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.OpenDoor();
 
@@ -46,9 +40,7 @@ namespace MicrowaveOvenControllerSolution
         [Test]
         public void Heater_Stops_When_OpenDoor()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.Start();
 
@@ -62,9 +54,7 @@ namespace MicrowaveOvenControllerSolution
         [Test]
         public void Nothing_Happens_When_Start_With_OpenDoor()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.OpenDoor();
 
@@ -77,29 +67,25 @@ namespace MicrowaveOvenControllerSolution
         [Test]
         public void Heater_Runs_For_1_Minute_OnStart()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.Start();
 
             Assert.IsTrue(ovenController.IsHeaterOn);
 
-            Assert.True(clockHwFake.Clock == TimeSpan.FromMinutes(1));
+            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
         }
 
         [Test]
         public void Heater_Runs_For_2_Minute_On_Twice_Start()
         {
-            clockHwFake = new FakeClockHW();
-
-            ovenController = new OvenController(microwaveOvenHwFake, clockHwFake);
+            var ovenController = new OvenController(microwaveOvenHwFake);
 
             microwaveOvenHwFake.Start();
 
             Assert.IsTrue(ovenController.IsHeaterOn);
 
-            Assert.True(clockHwFake.Clock == TimeSpan.FromMinutes(1));
+            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
 
             microwaveOvenHwFake.Start();
 
@@ -107,7 +93,7 @@ namespace MicrowaveOvenControllerSolution
 
             var expectedTimeSpan = TimeSpan.FromMinutes(3);
 
-            Assert.True(clockHwFake.Clock == expectedTimeSpan);
+            Assert.True(ovenController.TimeRemaining == expectedTimeSpan);
         }
     }
 }

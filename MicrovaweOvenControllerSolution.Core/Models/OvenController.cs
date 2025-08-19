@@ -15,43 +15,21 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         private readonly IMicrowaveOvenHW ovenHW;
 
         /// <summary>
-        /// Clock interface
-        /// </summary>
-        private readonly IClockHW clockHW;
-
-        /// <summary>
         /// Default ctor of the oven controller
         /// </summary>
         /// <param name="ovenHW">Hardware injected interface</param>
-        public OvenController(IMicrowaveOvenHW ovenHW, IClockHW clockHW)
+        public OvenController(IMicrowaveOvenHW ovenHW)
         {
             this.ovenHW = ovenHW;
-            this.clockHW = clockHW;
 
             this.ovenHW.DoorOpenChanged += (bool isOpen) => IsDoorOpen = isOpen;
             this.ovenHW.StartButtonPressed += new EventHandler((_, _) => Start());
-
-            this.clockHW.TimeIsElapsed += new EventHandler((_, _) => TurnHeaterOff());
         }
 
         /// <summary>
         /// Time remaining
         /// </summary>
-        private TimeSpan TimeRemaining
-        {
-            get => this.clockHW.Clock;
-            set
-            {
-                if (value == TimeSpan.Zero)
-                {
-                    this.clockHW.Stop();
-
-                    return;
-                }
-
-                this.clockHW.Schedule(value);
-            }
-        }
+        public TimeSpan TimeRemaining { get; private set; }
 
         /// <summary>
         /// Indicates whether the light is on or off
