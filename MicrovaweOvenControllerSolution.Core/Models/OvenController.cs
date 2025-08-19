@@ -46,7 +46,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         public TimeSpan? TimeRemaining
         {
             get => this.ovenControllerClock.Clock;
-            set
+            private set
             {
                 if (!value.HasValue)
                 {
