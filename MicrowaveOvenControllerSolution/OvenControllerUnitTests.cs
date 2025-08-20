@@ -73,7 +73,7 @@ namespace MicrowaveOvenControllerSolution.UnitTests
 
             Assert.IsTrue(ovenController.IsHeaterOn);
 
-            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
+            Assert.IsTrue(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
         }
 
         [Test]

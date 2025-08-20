@@ -74,7 +74,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private bool IsDoorOpen
         {
-            get { return this._ovenHW.DoorOpen; }
+            get { return _ovenHW.DoorOpen; }
             set
             {
                 IsLightOn = value;
@@ -104,7 +104,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private void TurnHeaterOn()
         {
-            TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(this.Options.AddedTimeMinutes));
+            TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(Options.AddedTimeMinutes));
 
             _ovenHW.TurnOnHeater();
         }
