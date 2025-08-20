@@ -13,7 +13,7 @@
         /// <summary>
         /// Added time minutes
         /// </summary>
-        public static OvenControllerOptions Default => new OvenControllerOptions
+        public static OvenControllerOptions Default => new()
         {
             AddedTimeMinutes = 1D
         };

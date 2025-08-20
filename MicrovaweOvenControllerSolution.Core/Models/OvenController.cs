@@ -10,12 +10,12 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// <summary>
         /// Hardware interface
         /// </summary>
-        private readonly IMicrowaveOvenHW ovenHW;
+        private readonly IMicrowaveOvenHW _ovenHW;
 
         /// <summary>
         /// Clock implementation
         /// </summary>
-        private readonly OvenClock ovenControllerClock;
+        private readonly OvenClock _ovenControllerClock;
 
         /// <summary>
         /// Controller options
@@ -28,16 +28,16 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// <param name="ovenHW">Hardware injected interface</param>
         public OvenController(IMicrowaveOvenHW ovenHW)
         {
-            this.Options = OvenControllerOptions.Default;
+            Options = OvenControllerOptions.Default;
 
-            this.ovenControllerClock = new OvenClock();
+            _ovenControllerClock = new OvenClock();
 
-            this.ovenHW = ovenHW;
+            _ovenHW = ovenHW;
 
-            this.ovenHW.DoorOpenChanged += (bool isOpen) => IsDoorOpen = isOpen;
-            this.ovenHW.StartButtonPressed += new EventHandler((_, _) => Start());
+            _ovenHW.DoorOpenChanged += (bool isOpen) => IsDoorOpen = isOpen;
+            _ovenHW.StartButtonPressed += new EventHandler((_, _) => Start());
 
-            this.ovenControllerClock.TimeIsElapsed += new EventHandler((_, _) => TurnHeaterOff());
+            _ovenControllerClock.TimeIsElapsed += new EventHandler((_, _) => TurnHeaterOff());
         }
 
         /// <summary>
@@ -45,17 +45,17 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         public TimeSpan? TimeRemaining
         {
-            get => this.ovenControllerClock.Clock;
+            get => _ovenControllerClock.Clock;
             private set
             {
                 if (!value.HasValue)
                 {
-                    this.ovenControllerClock.Stop();
+                    _ovenControllerClock.Stop();
 
                     return;
                 }
 
-                this.ovenControllerClock.Schedule(value);
+                _ovenControllerClock.Schedule(value);
             }
         }
 
@@ -74,7 +74,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         /// </summary>
         private bool IsDoorOpen
         {
-            get { return this.ovenHW.DoorOpen; }
+            get { return this._ovenHW.DoorOpen; }
             set
             {
                 IsLightOn = value;
@@ -106,7 +106,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         {
             TimeRemaining = (TimeRemaining ?? TimeSpan.Zero).Add(TimeSpan.FromMinutes(this.Options.AddedTimeMinutes));
 
-            this.ovenHW.TurnOnHeater();
+            _ovenHW.TurnOnHeater();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace MicrowaveOvenControllerSolution.Core.Models
         {
             TimeRemaining = null;
 
-            this.ovenHW.TurnOffHeater();
+            _ovenHW.TurnOffHeater();
         }
     }
 }

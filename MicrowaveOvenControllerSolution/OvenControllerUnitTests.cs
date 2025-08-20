@@ -1,9 +1,9 @@
 using MicrowaveOvenControllerSolution.Core.Models;
 using MicrowaveOvenControllerSolution.UnitTests.Fakes;
 
-namespace MicrowaveOvenControllerSolution
+namespace MicrowaveOvenControllerSolution.UnitTests
 {
-    public class Tests
+    public class OvenControllerUnitTests
     {
         private FakeMicrowaveOvenHW microwaveOvenHwFake;
 
@@ -85,13 +85,13 @@ namespace MicrowaveOvenControllerSolution
 
             Assert.IsTrue(ovenController.IsHeaterOn);
 
-            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
+            Assert.IsTrue(ovenController.TimeRemaining == TimeSpan.FromMinutes(1));
 
             microwaveOvenHwFake.Start();
 
             var expectedTimeSpan = TimeSpan.FromMinutes(2);
 
-            Assert.True(ovenController.TimeRemaining == expectedTimeSpan);
+            Assert.IsTrue(ovenController.TimeRemaining == expectedTimeSpan);
         }
 
         [Test]
@@ -113,11 +113,11 @@ namespace MicrowaveOvenControllerSolution
 
             Assert.IsTrue(ovenController.IsHeaterOn); // should be on
 
-            Assert.True(ovenController.TimeRemaining == TimeSpan.FromMinutes(waitTime * 3)); // == 3x
+            Assert.IsTrue(ovenController.TimeRemaining == TimeSpan.FromMinutes(waitTime * 3)); // == 3x
 
             Thread.Sleep(TimeSpan.FromMinutes(waitTime * 4)); // wait for 4x waitTime
 
-            Assert.False(ovenController.IsHeaterOn); // should be off
+            Assert.IsFalse(ovenController.IsHeaterOn); // should be off
         }
     }
 }
